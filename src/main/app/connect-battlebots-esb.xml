@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:quartz="http://www.mulesoft.org/schema/mule/quartz" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:robo="http://www.mulesoft.org/schema/mule/robo" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" version="EE-3.6.1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/robo http://www.mulesoft.org/schema/mule/robo/current/mule-robo.xsd
+http://www.mulesoft.org/schema/mule/quartz http://www.mulesoft.org/schema/mule/quartz/current/mule-quartz.xsd">
+    <http:request-config name="HTTP_Request_Configuration" host="hackaton.cloudhub.io" port="80" doc:name="HTTP Request Configuration"/>
+     <robo:config name="Robo" robotAddr="1216" doc:name="Robo"/>
+    <robo:config name="Robo2" robotAddr="0FA5" doc:name="Robo2"/>
+    <flow name="Robot1Flow">
+        <poll doc:name="Poll">
+            <http:request config-ref="HTTP_Request_Configuration" path="getMovement" method="GET" doc:name="HTTP">
+                <http:request-builder>
+                    <http:query-param paramName="queue" value="1"/>
+                </http:request-builder>
+            </http:request>
+            
+        </poll>
+                <byte-array-to-string-transformer doc:name="Byte Array to String"/>
+        <expression-filter expression="#[!payload.equals(&quot;&quot;)]" doc:name="Expression"/>
+        <robo:send-command-to-parse config-ref="Robo" commandToParse="#[payload]" doc:name="Robo"/>
+    </flow>
+    <flow name="Robot2Flow">
+        <poll doc:name="Poll">
+            <http:request config-ref="HTTP_Request_Configuration" path="getMovement" method="GET" doc:name="HTTP">
+                <http:request-builder>
+                    <http:query-param paramName="queue" value="1"/>
+                </http:request-builder>
+            </http:request>
+            
+        </poll>
+                <byte-array-to-string-transformer doc:name="Byte Array to String"/>
+        <expression-filter expression="#[!payload.equals(&quot;&quot;)]" doc:name="Expression"/>
+        <robo:send-command-to-parse config-ref="Robo2" commandToParse="#[payload]" doc:name="Robo"/>
+    </flow>
+</mule>
