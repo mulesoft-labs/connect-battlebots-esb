@@ -8,7 +8,7 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 http://www.mulesoft.org/schema/mule/robo http://www.mulesoft.org/schema/mule/robo/current/mule-robo.xsd
 http://www.mulesoft.org/schema/mule/quartz http://www.mulesoft.org/schema/mule/quartz/current/mule-quartz.xsd">
-    <http:request-config name="HTTP_Request_Configuration" host="hackaton.cloudhub.io" port="80" doc:name="HTTP Request Configuration"/>
+    <http:request-config name="HTTP_Request_Configuration" host="http://http://battlebots-connect.cloudhub.io/" port="80" doc:name="HTTP Request Configuration"/>
      <robo:config name="Robo" robotAddr="1216" doc:name="Robo"/>
     <robo:config name="Robo2" robotAddr="0FA5" doc:name="Robo2"/>
     <flow name="Robot1Flow">
